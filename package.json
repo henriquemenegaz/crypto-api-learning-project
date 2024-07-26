@@ -1,0 +1,31 @@
+{
+  "name": "crypto-api-learning-project",
+  "version": "1.0.0",
+  "description": "A Project to develop my skills with web development and REST API usage.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henriquemenegaz/crypto-api-learning-project.git"
+  },
+  "keywords": [
+    "REST API",
+    "JS",
+    "EJS"
+  ],
+  "author": "Henrique Menegaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henriquemenegaz/crypto-api-learning-project/issues"
+  },
+  "homepage": "https://github.com/henriquemenegaz/crypto-api-learning-project#readme",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}
