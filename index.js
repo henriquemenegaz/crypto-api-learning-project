@@ -5,6 +5,10 @@ import { existsSync } from 'fs';
 import bodyParser from 'body-parser';
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from 'dotenv';
+
+// Carrega variáveis de ambiente do arquivo .env
+dotenv.config();
 
 // Define o diretório principal e o caminho do arquivo coins_map.json
 const dirMain = path.dirname(fileURLToPath(import.meta.url));
@@ -16,7 +20,7 @@ const port = 3000;
 
 // Define a URL da API e a chave da API
 const API_URL = 'https://api.coingecko.com/api/v3/';
-const API_KEY = "CG-ugY21foPBJyZFJarFzmW6ykV";
+const 
 
 // Objeto de configuração para axios com o cabeçalho da chave da API
 const config = {
