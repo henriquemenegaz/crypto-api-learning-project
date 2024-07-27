@@ -1,6 +1,5 @@
 ### README.md
 
-```markdown
 # Crypto API Learning Project
 
 This project is a simple Express server that interacts with the CoinGecko API to fetch and display cryptocurrency data. The server provides endpoints to list coins, get coin IDs based on ticker symbols, and fetch detailed coin data.
@@ -99,9 +98,8 @@ Static files (HTML, CSS, JavaScript) are served from the `/public` directory.
 ## License
 
 This project is licensed under the MIT License.
-```
 
-### How to Use the README.md
+### Summary
 
 1. **Clone the repository** to your local machine using the provided Git command.
 2. **Navigate to the project directory** using the `cd` command.
