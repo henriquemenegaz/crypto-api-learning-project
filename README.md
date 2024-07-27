@@ -1,5 +1,3 @@
-### README.md
-
 # Crypto API Learning Project
 
 This project is a simple Express server that interacts with the CoinGecko API to fetch and display cryptocurrency data. The server provides endpoints to list coins, get coin IDs based on ticker symbols, and fetch detailed coin data.
