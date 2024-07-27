@@ -1,4 +1,3 @@
-// Importação de módulos necessários
 import express from 'express';
 import axios from 'axios';
 import { readFile, writeFile } from 'fs/promises';
@@ -41,64 +40,75 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rota para obter a lista de moedas
 app.get('/list', async (req, res) => {
-    // Verifica se o mapa de moedas existe
-    if (existsSync(coinsMapPath)) {
-        const coinsMap = await readFile(coinsMapPath, 'utf8');
-    } else {
-        // Se não existir, faz uma requisição à API para obter a lista de moedas
-        try {
+    try {
+        if (existsSync(coinsMapPath)) {
+            coinsMap = JSON.parse(await readFile(coinsMapPath, 'utf8'));
+        } else {
             const response = await axios.get(API_URL + "coins/list", config);
-            const coinsMap = JSON.stringify(response.data);
-            await writeFile(coinsMapPath, coinsMap);  // Salva a lista no arquivo coins_map.json
-        } catch (error) {
-            console.error("Failed to make request:", error.code);  // Lida com erros na requisição
+            coinsMap = response.data;
+            await writeFile(coinsMapPath, JSON.stringify(coinsMap));
         }
+        res.redirect('/');
+    } catch (error) {
+        console.error("Failed to make request:", error);
+        res.status(500).send({ error: "Failed to fetch coin list. Please try again later." });
     }
-    res.redirect('/');  // Redireciona para a página inicial
 });
 
 // Rota para obter os IDs das moedas a partir do ticker e mostrar na página principal
-app.post('/coin-ids', async (req, res) => {
-    const coinTicker = req.body.ticker;
-    coins = coinsMap.filter(coin => coin.symbol === coinTicker);  // Filtra moedas pelo ticker
-    res.render('index.ejs', { coins: coins });  // Renderiza a página principal com os resultados
+app.post('/coin-ids', (req, res) => {
+    try {
+        const coinTicker = req.body.ticker;
+        coins = coinsMap.filter(coin => coin.symbol === coinTicker);
+        if (coins.length === 0) {
+            return res.status(404).send({ error: "No coins found with the provided ticker." });
+        }
+        res.render('index.ejs', { coins: coins });
+    } catch (error) {
+        console.error("Error processing coin-ids request:", error);
+        res.status(500).send({ error: "An error occurred while processing your request. Please try again later." });
+    }
 });
 
 // Rota para obter dados de uma moeda pelo ID
 app.post('/coin-data', async (req, res) => {
-    const coinId = req.body.coinId;
-    const coin = coinsMap.filter(coin => coin.id === coinId);
-    const coinName = coin[0].name;
-    const coinSymbol = coin[0].symbol;
-
     try {
-        // Constrói a URL da API com os parâmetros necessários
-        const newURL = API_URL + "simple/price/" + "?ids=" + coinId + "&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true";
+        const coinId = req.body.coinId;
+        const coin = coinsMap.find(coin => coin.id === coinId);
+        if (!coin) {
+            return res.status(404).send({ error: "Coin not found with the provided ID." });
+        }
+
+        const coinName = coin.name;
+        const coinSymbol = coin.symbol;
+
+        const newURL = `${API_URL}simple/price/?ids=${coinId}&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true`;
         const response = await axios.get(newURL, config);
+
         const coinData = response.data[coinId];
         coinData.symbol = coinSymbol;
         coinData.name = coinName;
         coinData.id = coinId;
-        // Renderiza a página principal com os dados da moeda e a lista de moedas
+
         res.render('index.ejs', {
             coinData: coinData,
             coins: coins,
         });
     } catch (error) {
-        console.log(error);
-        console.error("Failed to make request:", error.code);  // Lida com erros na requisição
+        console.error("Failed to make request:", error);
+        res.status(500).send({ error: "Failed to fetch coin data. Please try again later." });
     }
 });
 
 // Rota para renderizar a página inicial
 app.get('/', (req, res) => {
     res.render('index.ejs');
-});
+})
 
 // Inicializa o servidor na porta especificada
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
-});
+})
 
 // Função para verificar se uma variável está definida
 function assertDefined(variable) {
