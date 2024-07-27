@@ -20,7 +20,7 @@ const port = 3000;
 
 // Define a URL da API e a chave da API
 const API_URL = 'https://api.coingecko.com/api/v3/';
-const 
+const API_KEY = process.env.API_KEY;
 
 // Objeto de configuração para axios com o cabeçalho da chave da API
 const config = {

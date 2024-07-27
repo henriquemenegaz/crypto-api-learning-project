@@ -55,7 +55,7 @@
 
             <div class="centered-table-container">
                 <% if (locals.coins) { %>
-                    <h1 class="text-center mb-4">Coins for ticker $<%= coins[0].symbol.toUpperCase() %></h1>
+                    <h1 class="text-center mb-4">Coins for $<%= coins[0].symbol.toUpperCase() %></h1>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -98,7 +98,7 @@
 
             <div class="centered-table-container">
                 <% if (locals.coinData) { %>
-                    <h1 class="text-center mb-4">Data for the coin <%= coinData.name %></h1>
+                    <h1 class="text-center mb-4">Data for <%= coinData.name %></h1>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
