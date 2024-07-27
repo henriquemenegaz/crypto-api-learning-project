@@ -36,38 +36,38 @@
     </header>
 
 
-    <section class="page-section" id="services">
+    <section class="page-section" id="coin-ids">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Get crypto ID</h2>
                 <h3 class="section-subheading text-muted">Fill the form below with coin's ticker to get crypto ID.</h3>
             </div>
 
-            <div class="text-center">
-                <form action="/coin-ids" method="post">
-                    <label for="ticker">Ticker</label>
-                    <input type="text" name="ticker" placeholder="Write coin's Ticker" id="ticker" required>
-                    <button type="submit">Get coin IDs</button>        
+            <div class="text-center mb-5">
+                <form action="/coin-ids" method="post" class="centered-form form-white">
+                    <div class="form-group mb-2">
+                        <!-- <label for="ticker" class="form-label">Ticker</label> -->
+                        <input type="text" class="form-control bg-light" name="ticker" placeholder="Write coin's Ticker" id="ticker" required>                               
+                    </div>
+                    <button type="submit" class="btn btn-dark">Get coin IDs</button> 
                 </form>
             </div>
 
-            <div class="text-center">
+            <div class="centered-table-container">
                 <% if (locals.coins) { %>
-                    <h1>Coins for ticker $<%= coins[0].symbol.toUpperCase() %></h1>
-                    <table>
-                        <thead>
+                    <h1 class="text-center mb-4">Coins for ticker $<%= coins[0].symbol.toUpperCase() %></h1>
+                    <table class="table">
+                        <thead class="thead-dark">
                             <tr>
-                                <th>Name</th>
-                                <th>ID</th>
-                                <th>Ticker</th>
+                                <th scope="col">Coin's Name</th>
+                                <th scope="col">Coin's ID</th>
                             </tr>
                         </thead>
                         <tbody>           
                             <% coins.forEach(coin => { %>
                                 <tr>
                                     <td> <%= coin.name %></td>
-                                    <td><%= coin.id %></td>
-                                    <td><%= coin.symbol.toUpperCase() %></td>                    
+                                    <td><%= coin.id %></td>%></td>                    
                                 </tr>
                             <% }); %>   
                         </tbody>
@@ -78,29 +78,32 @@
     </section>
 
 
-    <section class="page-section bg-light" id="portfolio">
+    <section class="page-section bg-light" id="coin-data">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Get crypto data</h2>
                 <h3 class="section-subheading text-muted">Fill the form below with the coin's ID to get crypto data.</h3>
             </div>
-
+            
             <div class="text-center">
-                <form action="/coin-data" method="post">
-                    <label for="coinId">Coin ID</label>
-                    <input type="text" name="coinId" placeholder="Write coin's id" id="coinId" required>
-                    <button type="submit">Get coin data</button>        
+                <form action="/coin-data" method="post" class="centered-form">
+                    <div class="form-group mb-2">
+                        <!-- <label for="coinId">Coin ID</label> -->
+                        <input type="text" class="form-control" name="coinId" placeholder="Write coin's id" id="coinId" required>                        
+                    </div>
+                    <button type="submit" class="btn btn-dark">Get coin data</button> 
+                            
                 </form>
             </div>
 
-            <div class="text-center">
+            <div class="centered-table-container">
                 <% if (locals.coinData) { %>
-                    <h1>Data for the coin <%= coinData.name %></h1>
-                    <table>
-                        <thead>
+                    <h1 class="text-center mb-4">Data for the coin <%= coinData.name %></h1>
+                    <table class="table">
+                        <thead class="thead-dark">
                             <tr>
-                                <th>Property</th>
-                                <th>Value</th>
+                                <th scope="col">Property</th>
+                                <th scope="col">Value</th>
                             </tr>
                         </thead>
                         <tbody>                            
@@ -133,12 +136,7 @@
                 <% } %>
             </div>
         </div>
-    </section>
-
-    
-
-    
-    
+    </section>    
 
     <!-- Footer-->
     <footer class="footer py-4">
